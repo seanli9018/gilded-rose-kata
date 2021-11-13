@@ -1,5 +1,9 @@
 import { expect } from 'chai';
-import { Item, GildedRose } from '@/gilded-rose';
+import { Item } from '../../app/Item';
+import { GildedRose } from '@/gilded-rose';
+import { Sulfuras } from '../../app/Sulfuras';
+import { AgedBrie } from '../../app/AgedBrie';
+import { BackstagePass } from '../../app/BackstagePass'
 
 describe('Gilded Rose', () => {
   it ('should foo', () => {
@@ -12,7 +16,7 @@ describe('Gilded Rose', () => {
 
   //"Sulfuras", being a legendary item, never has to be sold or decreases in Quality
   it ('Sulfuras should not reduce quality and sellIn', () => {
-    const gildedRose = new GildedRose([new Item('Sulfuras, Hand of Ragnaros', 3, 9)]);
+    const gildedRose = new GildedRose([new Sulfuras(3, 9)]);
     const items = gildedRose.updateQuality();
     const theItem = items[0];
     expect(theItem.sellIn).to.equal(3);
@@ -46,7 +50,7 @@ describe('Gilded Rose', () => {
   //the Quality of an item is never negative, The Quality of an item is never more than 50
   //"Aged Brie" actually increases in Quality the older it gets
   it ('Aged brie should add quality when time goes on', () => {
-    const gildedRose = new GildedRose([ new Item('Aged Brie', 3, 48)]);
+    const gildedRose = new GildedRose([new AgedBrie(3, 48)]);
     const items = gildedRose.updateQuality();
     const theItem = items[0];
     expect(theItem.sellIn).to.equal(2);
@@ -66,7 +70,7 @@ describe('Gilded Rose', () => {
   // 	Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but
   // 	Quality drops to 0 after the concert
   it('Backstage passes to a TAFKAL80ETC concert should add quality and be zero when time on', () => {
-    const gildedRose = new GildedRose([new Item('Backstage passes to a TAFKAL80ETC concert', 11, 32) ]);
+    const gildedRose = new GildedRose([new BackstagePass(11, 32) ]);
     const items = gildedRose.updateQuality();
     const theItem = items[0];
     expect(theItem.sellIn).to.equal(10);
@@ -85,13 +89,13 @@ describe('Gilded Rose', () => {
 
     const items = [
       new Item("+5 Dexterity Vest", 10, 20),
-      new Item("Aged Brie", 2, 0),
+      new AgedBrie(2, 0),
       new Item("Elixir of the Mongoose", 5, 7),
-      new Item("Sulfuras, Hand of Ragnaros", 0, 80),
+      new Sulfuras(0, 80),
       new Item("+ 5 Dexterity Vest", -1, 80),
-      new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20),
-      new Item("Backstage passes to a TAFKAL80ETC concert", 10, 49),
-      new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
+      new BackstagePass(15, 20),
+      new BackstagePass(10, 49),
+      new BackstagePass(5, 49),
       new Item("Conjured Mana Cake", 3, 6)];
 
     const gildedRose = new GildedRose(items);

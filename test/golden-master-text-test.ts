@@ -1,4 +1,5 @@
-import { Item, GildedRose } from '@/gilded-rose';
+import { Item } from '../app/Item';
+import { GildedRose } from '@/gilded-rose';
 
 const items = [
   new Item("+5 Dexterity Vest", 10, 20), //
@@ -11,7 +12,6 @@ const items = [
   new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
   // this conjured item does not work properly yet
   new Item("Conjured Mana Cake", 3, 6)];
-
 
 const gildedRose = new GildedRose(items);
 let days: number = 2;
