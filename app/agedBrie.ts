@@ -1,4 +1,4 @@
-import { Item } from './Item';
+import { Item } from './item';
 
 export class AgedBrie extends Item {
   constructor(sellIn: number, quality: number) {

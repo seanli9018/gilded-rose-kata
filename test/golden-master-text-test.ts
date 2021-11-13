@@ -1,4 +1,4 @@
-import { Item } from '../app/Item';
+import { Item } from '../app/item';
 import { GildedRose } from '@/gilded-rose';
 
 const items = [

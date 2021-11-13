@@ -1,9 +1,10 @@
 import { expect } from 'chai';
-import { Item } from '../../app/Item';
+import { Item } from '../../app/item';
 import { GildedRose } from '@/gilded-rose';
-import { Sulfuras } from '../../app/Sulfuras';
-import { AgedBrie } from '../../app/AgedBrie';
-import { BackstagePass } from '../../app/BackstagePass'
+import { Sulfuras } from '../../app/sulfuras';
+import { AgedBrie } from '../../app/agedBrie';
+import { BackstagePass } from '../../app/backstagePass';
+import {Conjured} from '../../app/conjured';
 
 describe('Gilded Rose', () => {
   it ('should foo', () => {
@@ -84,6 +85,22 @@ describe('Gilded Rose', () => {
     expect(theItem.sellIn).to.equal(5);
     expect(theItem.quality).to.equal(43);
   });
+
+  //"Conjured" items degrade in Quality twice as fast as normal items
+  it ('Conjured Mana Cake test', () => {
+    const gildedRose = new GildedRose([new Conjured(3, 6) ]);
+    const items = gildedRose.updateQuality();
+    const theItem = items[0];
+    expect(theItem.sellIn).to.equal(2);
+    expect(theItem.quality).to.equal(4);
+
+    gildedRose.updateQuality();
+    expect(theItem.sellIn).to.equal(1);
+    expect(theItem.quality).to.equal(2);
+    gildedRose.updateQuality();
+    expect(theItem.sellIn).to.equal(0);
+    expect(theItem.quality).to.equal(0);
+  })
 
   it('Run result should same as baseline', () => {
 

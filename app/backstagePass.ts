@@ -1,9 +1,10 @@
-import { Item } from './Item';
+import { Item } from './item';
 
 export class BackstagePass extends Item {
   constructor(sellIn: number, quality: number) {
     super('Backstage passes to a TAFKAL80ETC concert', sellIn, quality);
   }
+
   _modify() {
     this.increaseQuality();
     if(this.sellIn < 11) {
