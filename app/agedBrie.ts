@@ -4,11 +4,11 @@ export class AgedBrie extends Item {
   constructor(sellIn: number, quality: number) {
     super('Aged Brie', sellIn, quality);
   }
-  _modify() {
-    this.increaseQuality();
-    this.reduceSellIn();
+
+  changeQuality() {
+    this.quality = this.quality + this.unitQuality;
     if(this.sellIn < 0 ) {
-      this.increaseQuality();
+      this.quality = this.quality + this.unitQuality;
     }
   }
 }

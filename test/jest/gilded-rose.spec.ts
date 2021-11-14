@@ -88,18 +88,26 @@ describe('Gilded Rose', () => {
 
   //"Conjured" items degrade in Quality twice as fast as normal items
   it ('Conjured Mana Cake test', () => {
-    const gildedRose = new GildedRose([new Conjured(3, 6) ]);
+    const gildedRose = new GildedRose([new Conjured(3, 6), new Conjured(1, 46) ]);
     const items = gildedRose.updateQuality();
     const theItem = items[0];
+    const otherItem = items[1];
     expect(theItem.sellIn).to.equal(2);
     expect(theItem.quality).to.equal(4);
+    expect(otherItem.sellIn).to.equal(0);
+    expect(otherItem.quality).to.equal(44);
 
     gildedRose.updateQuality();
     expect(theItem.sellIn).to.equal(1);
     expect(theItem.quality).to.equal(2);
+    expect(otherItem.sellIn).to.equal(-1);
+    expect(otherItem.quality).to.equal(40);
+
     gildedRose.updateQuality();
     expect(theItem.sellIn).to.equal(0);
     expect(theItem.quality).to.equal(0);
+    expect(otherItem.sellIn).to.equal(-2);
+    expect(otherItem.quality).to.equal(36);
   })
 
   it('Run result should same as baseline', () => {
@@ -109,25 +117,22 @@ describe('Gilded Rose', () => {
       new AgedBrie(2, 0),
       new Item("Elixir of the Mongoose", 5, 7),
       new Sulfuras(0, 80),
-      new Item("+ 5 Dexterity Vest", -1, 80),
+      new Sulfuras(-1, 80),
       new BackstagePass(15, 20),
       new BackstagePass(10, 49),
       new BackstagePass(5, 49),
-      new Item("Conjured Mana Cake", 3, 6)];
+      new Conjured(3, 6)];
 
     const gildedRose = new GildedRose(items);
 
     let days: number = 2;
-    const baseline = "--------day 0--------name, sellIn, quality+5 Dexterity Vest 10 20Aged Brie 2 0Elixir of the " +
-      "Mongoose 5 7Sulfuras, Hand of Ragnaros 0 80" +
-      "+ 5 Dexterity Vest -1 80Backstage passes to a TAFKAL80ETC concert 15 20" +
-      "Backstage passes to a TAFKAL80ETC concert 10 49" +
-      "Backstage passes to a TAFKAL80ETC concert 5 49" +
-      "Conjured Mana Cake 3 6--------day 1--------name, sellIn, " +
-      "quality+5 Dexterity Vest 9 19Aged Brie 1 1Elixir of the Mongoose 4 6Sulfuras, " +
-      "Hand of Ragnaros 0 80+ 5 Dexterity Vest -2 78Backstage passes to a TAFKAL80ETC concert 14 21" +
-      "Backstage passes to a TAFKAL80ETC concert 9 50Backstage passes to a TAFKAL80ETC concert 4 50" +
-      "Conjured Mana Cake 2 5";
+    const baseline = "--------day 0--------name, sellIn, quality+5 Dexterity Vest 10 20Aged Brie 2 0Elixir of the Mongoose " +
+      "5 7Sulfuras, Hand of Ragnaros 0 80Sulfuras, Hand of Ragnaros -1 80Backstage passes to a TAFKAL80ETC concert 15 " +
+      "20Backstage passes to a TAFKAL80ETC concert 10 49Backstage passes to a TAFKAL80ETC concert 5 49" +
+      "Conjured Mana Cake 3 6--------day 1--------name, sellIn, quality+5 Dexterity Vest 9 19Aged Brie 1 1" +
+      "Elixir of the Mongoose 4 6Sulfuras, Hand of Ragnaros 0 80Sulfuras, Hand of Ragnaros -1 80" +
+      "Backstage passes to a TAFKAL80ETC concert 14 21Backstage passes to a TAFKAL80ETC concert 9 50" +
+      "Backstage passes to a TAFKAL80ETC concert 4 50Conjured Mana Cake 2 4";
 
     let result = "";
     for (let i=0; i<days; i++) {

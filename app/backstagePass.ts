@@ -5,17 +5,15 @@ export class BackstagePass extends Item {
     super('Backstage passes to a TAFKAL80ETC concert', sellIn, quality);
   }
 
-  _modify() {
-    this.increaseQuality();
-    if(this.sellIn < 11) {
-      this.increaseQuality();
-    }
-    if(this.sellIn < 6) {
-      this.increaseQuality();
-    }
-    this.reduceSellIn();
+  changeQuality() {
     if(this.sellIn < 0){
       this.quality = 0;
+    }else if(this.sellIn < 5) {
+      this.quality = this.quality + 3;
+    } else if (this.sellIn < 10) {
+      this.quality = this.quality + 2;
+    } else {
+      this.quality = this.quality + this.unitQuality;
     }
   }
 }

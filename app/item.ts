@@ -2,6 +2,10 @@ export class Item {
   name: string;
   sellIn: number;
   quality: number;
+  unitQuality: number = 1;
+
+  readonly  maxQualityValue = 50;
+  readonly minQualityValue = 0;
 
   constructor(name: string, sellIn: number, quality: number) {
     this.name = name;
@@ -9,25 +13,29 @@ export class Item {
     this.quality = quality;
   }
 
-  reduceSellIn() {
+  deceaseSellIn() {
     this.sellIn = this.sellIn - 1;
   }
 
-  reduceQuality() {
-    if(this.quality <= 0) return
-    this.quality = this.quality - 1;
-    if(this.sellIn < 0) {
-      this.quality = this.quality - 1;
+  checkQuality() {
+    if(this.quality < this.minQualityValue) {
+      this.quality = this.minQualityValue;
+    }
+    if(this.quality > this.maxQualityValue) {
+      this.quality = this.maxQualityValue
     }
   }
 
-  increaseQuality() {
-    if(this.quality >= 50) return;
-    this.quality = this.quality + 1;
+  changeQuality() {
+    this.quality = this.quality - this.unitQuality;
+    if(this.sellIn < 0) {
+      this.quality = this.quality - this.unitQuality;
+    }
   }
 
   _modify() {
-    this.reduceSellIn();
-    this.reduceQuality();
+    this.deceaseSellIn();
+    this.changeQuality();
+    this.checkQuality();
   }
 }
